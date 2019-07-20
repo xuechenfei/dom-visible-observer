@@ -1,7 +1,7 @@
 import visibleObserver from './index.js'
 
 window.onload = function() {
-  LazyLoad({
+  visibleObserver({
     el: document.getElementById('lazy'),
     show() {
       console.log('show')
@@ -10,7 +10,7 @@ window.onload = function() {
       console.log('hide')
     }
   })
-  LazyLoad({
+  visibleObserver({
     container: document.querySelector('.scroll-container'),
     el: document.getElementById('lazy2'),
     show() {
