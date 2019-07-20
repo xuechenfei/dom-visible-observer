@@ -9,8 +9,11 @@ module.exports = {
     index: './index.js'
   },
   output: {
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist')
+    chunkFilename: '[id].js',
+    libraryTarget: 'commonjs2',
+    umdNamedDefine: true
   },
   module: {
     rules: [
