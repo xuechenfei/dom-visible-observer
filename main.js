@@ -1,4 +1,4 @@
-import LazyLoad from './index.js'
+import visibleObserver from './index.js'
 
 window.onload = function() {
   LazyLoad({

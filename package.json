@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "./dist/index.js",
   "scripts": {
-    "dev": "webpack-dev-server --open --config webpack.build.js",
-    "build": "webpack --config webpack.build.js -p"
+    "dev": "webpack-dev-server --open --config webpack.build.js --port 8200",
+    "build": "webpack --config webpack.build.js"
   },
   "license": "MIT",
   "devDependencies": {
