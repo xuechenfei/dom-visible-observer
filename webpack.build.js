@@ -12,8 +12,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     chunkFilename: '[id].js',
-    libraryTarget: 'commonjs2',
-    umdNamedDefine: true
+    libraryTarget: 'commonjs2'
   },
   module: {
     rules: [

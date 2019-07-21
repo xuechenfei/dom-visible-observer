@@ -66,93 +66,88 @@ module.exports =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_RESULT__;!function (e, n) {
-     true ? !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
-        return n(e);
-    }.call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : n(e, !0);
-}(window, function (e, n) {
-    /**
-     * @description: 侦测dom是否在当前可视窗口
-     * @param
-     *  container 滚动容器
-     *  el 侦测的dom
-     *  threshold 插值 number类型
-     *  show 当el显示在当前可视窗口时的回调函数
-     *  hide 当el不在当前可视窗口时的回调函数
-     * @return
-     *  destory 取消此次侦测
-     */
-    function visibleObserver(_ref) {
-        var _ref$container = _ref.container,
-            container = _ref$container === undefined ? document : _ref$container,
-            el = _ref.el,
-            _ref$threshold = _ref.threshold,
-            threshold = _ref$threshold === undefined ? 0 : _ref$threshold,
-            show = _ref.show,
-            hide = _ref.hide;
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/**
+ * @description: 侦测dom是否在当前可视窗口
+ * @param
+ *  container 滚动容器
+ *  el 侦测的dom
+ *  threshold 插值 number类型
+ *  show 当el显示在当前可视窗口时的回调函数
+ *  hide 当el不在当前可视窗口时的回调函数
+ * @return
+ *  destory 取消此次侦测
+ */
+function visibleObserver(_ref) {
+    var _ref$container = _ref.container,
+        container = _ref$container === undefined ? document : _ref$container,
+        el = _ref.el,
+        _ref$threshold = _ref.threshold,
+        threshold = _ref$threshold === undefined ? 0 : _ref$threshold,
+        show = _ref.show,
+        hide = _ref.hide;
 
-        var init = function init(e) {
-            var scrollTop = getScrollTop(container);
-            var offsetTop = getOffsetTop(el, container);
-            var windowHeight = getWindowHeight(container);
+    var init = function init(e) {
+        var scrollTop = getScrollTop(container);
+        var offsetTop = getOffsetTop(el, container);
+        var windowHeight = getWindowHeight(container);
 
-            if (scrollTop + windowHeight > offsetTop - threshold) {
-                show();
-            } else {
-                hide();
-            }
-        };
-
-        container.addEventListener('scroll', init, {
-            passive: true
-        });
-
-        var destory = function destory() {
-            container.removeEventListener('scroll', init);
-        };
-
-        return { destory: destory };
-    }
-
-    function getScrollTop(target) {
-        if (target === document) {
-            return window.pageYOffset || //用于FF
-            document.documentElement.scrollTop || document.body.scrollTop || 0;
+        if (scrollTop + windowHeight > offsetTop - threshold) {
+            show && show();
+        } else {
+            hide && hide();
         }
+    };
 
-        return target.scrollTop;
+    container.addEventListener('scroll', init, {
+        passive: true
+    });
+
+    var destory = function destory() {
+        container.removeEventListener('scroll', init);
+    };
+
+    return { destory: destory };
+}
+
+function getScrollTop(target) {
+    if (target === document) {
+        return window.pageYOffset || //用于FF
+        document.documentElement.scrollTop || document.body.scrollTop || 0;
     }
 
-    function getScrollHeight(elem) {
-        if (elem === document) {
-            return document.documentElement.scrollHeight || document.body.scrollHeight;
-        }
+    return target.scrollTop;
+}
 
-        return elem.scrollHeight;
+function getScrollHeight(elem) {
+    if (elem === document) {
+        return document.documentElement.scrollHeight || document.body.scrollHeight;
     }
 
-    function getWindowHeight(elem) {
-        if (elem === document) {
-            return document.documentElement.clientHeight;
-        }
+    return elem.scrollHeight;
+}
 
-        return elem.offsetHeight;
+function getWindowHeight(elem) {
+    if (elem === document) {
+        return document.documentElement.clientHeight;
     }
 
-    function getOffsetLeft(elem) {
-        return elem.offsetParent ? elem.offsetLeft + getOffsetLeft(elem.offsetParent) : elem.offsetLeft;
-    }
+    return elem.offsetHeight;
+}
 
-    function getOffsetTop(elem, container) {
-        if (container.style) container.style.position = 'relative';
-        return elem.offsetParent && elem.offsetParent !== container ? elem.offsetTop + getOffsetTop(elem.offsetParent, container) : elem.offsetTop;
-    }
+function getOffsetLeft(elem) {
+    return elem.offsetParent ? elem.offsetLeft + getOffsetLeft(elem.offsetParent) : elem.offsetLeft;
+}
 
-    return n && (e.visibleObserver = visibleObserver), visibleObserver;
-});
+function getOffsetTop(elem, container) {
+    if (container.style) container.style.position = 'relative';
+    return elem.offsetParent && elem.offsetParent !== container ? elem.offsetTop + getOffsetTop(elem.offsetParent, container) : elem.offsetTop;
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (visibleObserver);
 
 /***/ }),
 /* 1 */
@@ -161,11 +156,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;!function (e, n) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__index_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__index_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__index_js__);
 
 
 window.onload = function () {
-  __WEBPACK_IMPORTED_MODULE_0__index_js___default()({
+  Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["default"])({
     el: document.getElementById('lazy'),
     show: function show() {
       console.log('show');
@@ -174,7 +168,7 @@ window.onload = function () {
       console.log('hide');
     }
   });
-  __WEBPACK_IMPORTED_MODULE_0__index_js___default()({
+  Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["default"])({
     container: document.querySelector('.scroll-container'),
     el: document.getElementById('lazy2'),
     show: function show() {
