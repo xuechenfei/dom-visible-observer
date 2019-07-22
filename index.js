@@ -30,6 +30,7 @@ function visibleObserver({
             hide && hide()
         }
     }
+    init();
 
     container.addEventListener('scroll', init, {
         passive: true
