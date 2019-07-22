@@ -16,7 +16,7 @@ function visibleObserver({
     show,
     hide
 }) {
-    const init = function(e) {
+    const init = throttle(function(e) {
         let scrollTop = getScrollTop(container)
         let offsetTop = getOffsetTop(el, container)
         let windowHeight = getWindowHeight(container)
@@ -29,8 +29,8 @@ function visibleObserver({
         } else {
             hide && hide()
         }
-    }
-    init();
+    }, 100);
+    init()
 
     container.addEventListener('scroll', init, {
         passive: true
@@ -41,6 +41,28 @@ function visibleObserver({
     }
 
     return { destory }
+}
+
+function throttle(func, wait) {
+    let lastTime = null
+    let timeout
+    return function() {
+        let context = this
+        let now = new Date()
+        if (now - lastTime - wait > 0) {
+            if (timeout) {
+                clearTimeout(timeout)
+                timeout = null
+            }
+            func.apply(context, arguments)
+            lastTime = now
+        } else if (!timeout) {
+            timeout = setTimeout(() => {
+                // 改变执行上下文环境
+                func.apply(context, arguments)
+            }, wait)
+        }
+    }
 }
 
 function getScrollTop(target) {

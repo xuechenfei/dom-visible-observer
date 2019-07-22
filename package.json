@@ -1,6 +1,6 @@
 {
   "name": "dom-visible-observer",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "webpack-dev-server --open --config webpack.config.js --port 8200",
