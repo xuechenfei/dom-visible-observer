@@ -90,7 +90,7 @@ function visibleObserver(_ref) {
         show = _ref.show,
         hide = _ref.hide;
 
-    var init = function init(e) {
+    var init = throttle(function (e) {
         var scrollTop = getScrollTop(container);
         var offsetTop = getOffsetTop(el, container);
         var windowHeight = getWindowHeight(container);
@@ -100,7 +100,8 @@ function visibleObserver(_ref) {
         } else {
             hide && hide();
         }
-    };
+    }, 100);
+    init();
 
     container.addEventListener('scroll', init, {
         passive: true
@@ -111,6 +112,30 @@ function visibleObserver(_ref) {
     };
 
     return { destory: destory };
+}
+
+function throttle(func, wait) {
+    var lastTime = null;
+    var timeout = void 0;
+    return function () {
+        var _arguments = arguments;
+
+        var context = this;
+        var now = new Date();
+        if (now - lastTime - wait > 0) {
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+            func.apply(context, arguments);
+            lastTime = now;
+        } else if (!timeout) {
+            timeout = setTimeout(function () {
+                // 改变执行上下文环境
+                func.apply(context, _arguments);
+            }, wait);
+        }
+    };
 }
 
 function getScrollTop(target) {
