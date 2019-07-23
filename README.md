@@ -1,5 +1,5 @@
 # dom-visible-observer
-在scroll过成功判断某个DOM是否已经进入指定容器的可视区域
+在scroll过程中判断某个DOM是否已经进入指定容器的可视区域
 
 ```
 npm install dom-visible-observer 
