@@ -75,7 +75,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * @param
  *  container 滚动容器
  *  el 侦测的dom
- *  threshold 插值 number类型
+ *  threshold 差值 number类型
  *  show 当el显示在当前可视窗口时的回调函数
  *  hide 当el不在当前可视窗口时的回调函数
  * @return
@@ -93,9 +93,10 @@ function visibleObserver(_ref) {
     var init = throttle(function (e) {
         var scrollTop = getScrollTop(container);
         var offsetTop = getOffsetTop(el, container);
+        var offsetHeight = el.offsetHeight;
         var windowHeight = getWindowHeight(container);
 
-        if (scrollTop + windowHeight > offsetTop - threshold) {
+        if (scrollTop + windowHeight > offsetTop - threshold && offsetTop + el.offsetHeight + threshold > scrollTop) {
             show && show();
         } else {
             hide && hide();
@@ -168,7 +169,6 @@ function getOffsetLeft(elem) {
 }
 
 function getOffsetTop(elem, container) {
-    if (container.style) container.style.position = 'relative';
     return elem.offsetParent && elem.offsetParent !== container ? elem.offsetTop + getOffsetTop(elem.offsetParent, container) : elem.offsetTop;
 }
 
@@ -184,26 +184,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 window.onload = function () {
-  Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["default"])({
-    el: document.getElementById('lazy'),
-    show: function show() {
-      console.log('show');
-    },
-    hide: function hide() {
-      console.log('hide');
-    }
-  });
-  Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["default"])({
-    container: document.querySelector('.scroll-container'),
-    el: document.getElementById('lazy2'),
-    show: function show() {
-      console.log('show2');
-    },
-    hide: function hide() {
-      console.log('hide2');
-    }
-  });
+    Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["default"])({
+        el: document.getElementById('lazy'),
+        threshold: -100,
+        show: function show() {
+            console.log('show');
+        },
+        hide: function hide() {
+            console.log('hide');
+        }
+    });
 };
+
+window.showMask = function () {
+    var container = document.querySelector('.mask-container');
+    container.style.display = 'block';
+    ModalHelper.afterOpen();
+    Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["default"])({
+        container: document.querySelector('.scroll-container'),
+        el: document.getElementById('lazy2'),
+        show: function show() {
+            console.log('show2');
+        },
+        hide: function hide() {
+            console.log('hide2');
+        }
+    });
+};
+var ModalHelper = function (bodyCls) {
+    var scrollTop = void 0; // 在闭包中定义一个用来保存滚动位置的变量
+    return {
+        afterOpen: function afterOpen() {
+            //弹出之后记录保存滚动位置，并且给body添加.modal-open
+            scrollTop = document.scrollingElement.scrollTop;
+            document.body.classList.add(bodyCls);
+            document.body.style.top = -scrollTop + 'px';
+        },
+        beforeClose: function beforeClose() {
+            //关闭时将.modal-open移除并还原之前保存滚动位置
+            document.body.classList.remove(bodyCls);
+            document.scrollingElement.scrollTop = scrollTop;
+        }
+    };
+}('modal-open');
 
 document.write('<h1>Hell Wo</h1>');
 

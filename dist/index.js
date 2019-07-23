@@ -75,7 +75,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * @param
  *  container 滚动容器
  *  el 侦测的dom
- *  threshold 插值 number类型
+ *  threshold 差值 number类型
  *  show 当el显示在当前可视窗口时的回调函数
  *  hide 当el不在当前可视窗口时的回调函数
  * @return
@@ -93,9 +93,10 @@ function visibleObserver(_ref) {
     var init = throttle(function (e) {
         var scrollTop = getScrollTop(container);
         var offsetTop = getOffsetTop(el, container);
+        var offsetHeight = el.offsetHeight;
         var windowHeight = getWindowHeight(container);
 
-        if (scrollTop + windowHeight > offsetTop - threshold) {
+        if (scrollTop + windowHeight > offsetTop - threshold && offsetTop + el.offsetHeight + threshold > scrollTop) {
             show && show();
         } else {
             hide && hide();
@@ -168,7 +169,6 @@ function getOffsetLeft(elem) {
 }
 
 function getOffsetTop(elem, container) {
-    if (container.style) container.style.position = 'relative';
     return elem.offsetParent && elem.offsetParent !== container ? elem.offsetTop + getOffsetTop(elem.offsetParent, container) : elem.offsetTop;
 }
 

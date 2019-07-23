@@ -3,7 +3,7 @@
  * @param
  *  container 滚动容器
  *  el 侦测的dom
- *  threshold 插值 number类型
+ *  threshold 差值 number类型
  *  show 当el显示在当前可视窗口时的回调函数
  *  hide 当el不在当前可视窗口时的回调函数
  * @return
@@ -19,17 +19,19 @@ function visibleObserver({
     const init = throttle(function(e) {
         let scrollTop = getScrollTop(container)
         let offsetTop = getOffsetTop(el, container)
+        let offsetHeight = el.offsetHeight
         let windowHeight = getWindowHeight(container)
 
         if (
             scrollTop + windowHeight >
-            offsetTop - threshold
+                offsetTop - threshold &&
+            offsetTop + el.offsetHeight + threshold > scrollTop
         ) {
             show && show()
         } else {
             hide && hide()
         }
-    }, 100);
+    }, 100)
     init()
 
     container.addEventListener('scroll', init, {
@@ -104,8 +106,6 @@ function getOffsetLeft(elem) {
 }
 
 function getOffsetTop(elem, container) {
-    if (container.style)
-        container.style.position = 'relative'
     return elem.offsetParent &&
         elem.offsetParent !== container
         ? elem.offsetTop +
