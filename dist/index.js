@@ -96,7 +96,7 @@ function visibleObserver(_ref) {
         var offsetHeight = el.offsetHeight;
         var windowHeight = getWindowHeight(container);
 
-        if (scrollTop + windowHeight > offsetTop - threshold && offsetTop + el.offsetHeight + threshold > scrollTop) {
+        if (scrollTop + windowHeight > offsetTop - threshold && offsetTop + offsetHeight + threshold > scrollTop) {
             show && show();
         } else {
             hide && hide();
@@ -108,11 +108,11 @@ function visibleObserver(_ref) {
         passive: true
     });
 
-    var destory = function destory() {
+    var destroy = function destroy() {
         container.removeEventListener('scroll', init);
     };
 
-    return { destory: destory };
+    return { destroy: destroy };
 }
 
 function throttle(func, wait) {
