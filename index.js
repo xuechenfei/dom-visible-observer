@@ -25,7 +25,7 @@ function visibleObserver({
         if (
             scrollTop + windowHeight >
                 offsetTop - threshold &&
-            offsetTop + el.offsetHeight + threshold > scrollTop
+            offsetTop + offsetHeight + threshold > scrollTop
         ) {
             show && show()
         } else {
@@ -38,11 +38,11 @@ function visibleObserver({
         passive: true
     })
 
-    const destory = () => {
+    const destroy = () => {
         container.removeEventListener('scroll', init)
     }
 
-    return { destory }
+    return { destroy }
 }
 
 function throttle(func, wait) {
