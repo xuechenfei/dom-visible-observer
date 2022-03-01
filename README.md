@@ -16,7 +16,7 @@ visibleObserver({
 ```
 
 ## container
-表示监听滚动的容器 默认是document
+表示监听滚动的容器 默认是document，如指定其他容器作为container，需要设置position属性
 
 ## el
 监听的DOM元素
